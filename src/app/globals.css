@@ -1,26 +1,109 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #0b0e17;
+  --foreground: #ebeef5;
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-outfit);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), sans-serif;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Custom premium styling tokens */
+.glass {
+  background: rgba(17, 22, 37, 0.65);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Custom glowing effects */
+.glow-warm {
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.35);
+}
+
+.glow-love {
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.45);
+}
+
+.glow-neon {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+/* Cozy custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(11, 14, 23, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Custom animations */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.03); }
+}
+
+@keyframes rain-drip {
+  0% { transform: translateY(-20px); opacity: 0; }
+  20% { opacity: 0.5; }
+  100% { transform: translateY(120px); opacity: 0; }
+}
+
+@keyframes bubble-rise {
+  0% { transform: translateY(20px) scale(0.6); opacity: 0; }
+  15% { opacity: 1; transform: translateY(0px) scale(1); }
+  85% { opacity: 1; }
+  100% { transform: translateY(-100px) scale(0.8); opacity: 0; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.animate-bubble {
+  animation: bubble-rise 4s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+/* Font helpers */
+.font-display {
+  font-family: var(--font-display), sans-serif;
 }

@@ -1,0 +1,17 @@
+{
+  "name": "TOGETHER: Cozy Couple World",
+  "short_name": "TOGETHER",
+  "description": "Cozy multiplayer couple world. A safe digital sanctuary to relax, connect, play, and share together.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111625",
+  "theme_color": "#111625",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
