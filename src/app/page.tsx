@@ -189,7 +189,7 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-radial from-[#15192c] via-[#0b0e17] to-[#04060b] flex items-center justify-center p-4 md:p-8 overflow-y-auto">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#15192c] via-[#0b0e17] to-[#04060b] flex items-center justify-center p-4 md:p-8 overflow-y-auto">
       
       {/* Dynamic Background Twinkling stars */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-900/10 via-transparent to-transparent pointer-events-none" />
@@ -217,7 +217,7 @@ export default function OnboardingPage() {
           <div className="relative w-48 h-48 rounded-full bg-slate-950/45 border border-white/10 flex items-center justify-center shadow-inner overflow-hidden shadow-violet-500/5 group">
             
             {/* Soft pulsing halo */}
-            <div className="absolute inset-0 rounded-full bg-radial from-violet-500/5 via-transparent to-transparent animate-pulse-slow" />
+            <div className="absolute inset-0 rounded-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-violet-500/5 via-transparent to-transparent animate-pulse-slow" />
 
             {/* Bouncing Chibi Figure */}
             <div className="relative w-28 h-36 flex flex-col items-center justify-end animate-float">
