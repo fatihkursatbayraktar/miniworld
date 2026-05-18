@@ -30,6 +30,12 @@ export default class FloristInteriorScene extends Phaser.Scene {
   }
  
   public create() {
+    // Stop all outdoor atmospheric loops inside quiet cozy shop
+    cozyAudio.stopRain();
+    cozyAudio.stopRiver();
+    cozyAudio.stopPiano();
+    cozyAudio.stopAutoChimes();
+
     // 1. Fetch registry configurations
     this.playMode = this.registry.get("playMode") || "ai";
     this.nickname = this.registry.get("nickname") || "Sunny";

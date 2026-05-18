@@ -15,6 +15,12 @@ export default class JewelerInteriorScene extends Phaser.Scene {
   }
  
   create() {
+    // Stop all outdoor atmospheric loops inside quiet cozy shop
+    cozyAudio.stopRain();
+    cozyAudio.stopRiver();
+    cozyAudio.stopPiano();
+    cozyAudio.stopAutoChimes();
+
     // Set physics world & camera boundaries to match coordinate mapping
     this.physics.world.setBounds(0, 0, 1600, 900);
     this.cameras.main.setBounds(0, 0, 1600, 900);

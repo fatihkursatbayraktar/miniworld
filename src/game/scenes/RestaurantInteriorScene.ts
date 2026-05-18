@@ -130,6 +130,12 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
   }
 
   public create() {
+    // Stop all outdoor atmospheric loops and start the cozy jazz lounge piano!
+    cozyAudio.stopRain();
+    cozyAudio.stopRiver();
+    cozyAudio.stopAutoChimes();
+    cozyAudio.startPiano();
+
     this.playMode = this.registry.get("playMode") || "ai";
     this.nickname = this.registry.get("nickname") || "Sunny";
     this.avatarColor = this.registry.get("avatarColor") || 0xfb7185;
@@ -483,6 +489,7 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
       cozyAudio.playClick();
       // Stand up before leaving
       this.standUpDining();
+      cozyAudio.stopPiano();
       this.scene.start("MainScene", { spawnX: 1220, spawnY: 180 });
       return;
     }
