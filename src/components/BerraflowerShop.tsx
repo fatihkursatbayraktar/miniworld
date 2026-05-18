@@ -117,7 +117,7 @@ export default function BerraflowerShop() {
       <div className="absolute inset-0 cursor-pointer" onClick={handleClose} />
  
       {/* Stardew Valley Wooden Board Container */}
-      <div className="relative w-full max-w-lg rounded-[28px] bg-[#2b1810] border-[5px] border-[#5e3816] shadow-2xl p-6 md:p-8 flex flex-col gap-6 text-[#fae8ff] overflow-hidden select-none outline outline-4 outline-[#1a0e0a]">
+      <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-[28px] bg-[#2b1810] border-[5px] border-[#5e3816] shadow-2xl p-4 md:p-8 flex flex-col gap-4 md:gap-6 text-[#fae8ff] select-none outline outline-4 outline-[#1a0e0a] custom-scrollbar">
         
         {/* Gold Metal Corner Braces (Retro pixel RPG theme) */}
         <div className="absolute top-1 left-1 w-6 h-6 border-t-4 border-l-4 border-amber-400 rounded-tl-[8px] opacity-75" />
@@ -152,7 +152,7 @@ export default function BerraflowerShop() {
         </p>
  
         {/* Scrollable Flower Catalog - Parchment Paper styled cards */}
-        <div className="flex flex-col gap-3.5 max-h-[290px] overflow-y-auto pr-1.5 custom-scrollbar select-none">
+        <div className="flex flex-col gap-3 max-h-[190px] md:max-h-[290px] overflow-y-auto pr-1.5 custom-scrollbar select-none">
           {flowersList.map((flower) => (
             <div
               key={flower.id}

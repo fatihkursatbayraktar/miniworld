@@ -75,16 +75,16 @@ export default function GhaliaLoungeMenu() {
     <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4">
       {/* ── STAGE 1: ORDERING MENU ────────────────────────────────────────── */}
       {activeModal === "menu" && (
-        <div className="w-full max-w-4xl bg-[#0f172a] rounded-2xl border-2 border-[#d4af37] shadow-[0_0_30px_rgba(212,175,55,0.25)] flex flex-col overflow-hidden relative animate-in zoom-in-95 duration-300">
+        <div className="w-full max-w-4xl max-h-[90vh] md:max-h-[95vh] bg-[#0f172a] rounded-2xl border-2 border-[#d4af37] shadow-[0_0_30px_rgba(212,175,55,0.25)] flex flex-col overflow-hidden relative animate-in zoom-in-95 duration-300">
           {/* Header */}
-          <div className="flex items-center justify-between p-5 border-b border-[#d4af37]/30 bg-gradient-to-r from-[#1e293b] to-[#0f172a]">
+          <div className="flex items-center justify-between p-4 md:p-5 border-b border-[#d4af37]/30 bg-gradient-to-r from-[#1e293b] to-[#0f172a]">
             <div className="flex items-center gap-3">
               <span className="text-3xl filter drop-shadow-md">🍷</span>
               <div>
-                <h2 className="text-2xl font-bold text-[#d4af37] font-display tracking-wide drop-shadow-md">
+                <h2 className="text-xl md:text-2xl font-bold text-[#d4af37] font-display tracking-wide drop-shadow-md">
                   Ghalia Lounge
                 </h2>
-                <p className="text-[#94a3b8] text-xs font-medium uppercase tracking-wider">
+                <p className="text-[#94a3b8] text-[10px] md:text-xs font-medium uppercase tracking-wider">
                   Boğaz Manzaralı Seçkin Akşam Menüsü
                 </p>
               </div>
@@ -101,10 +101,10 @@ export default function GhaliaLoungeMenu() {
           </div>
 
           {/* Body content */}
-          <div className="flex flex-col md:flex-row flex-1 overflow-hidden p-6 gap-6 bg-[#0b0f19]">
+          <div className="flex flex-col md:flex-row flex-1 overflow-y-auto md:overflow-hidden p-4 md:p-6 gap-4 md:gap-6 bg-[#0b0f19]">
             {/* Left: Food Section */}
             <div className="flex-1 flex flex-col gap-4">
-              <h3 className="text-lg font-semibold text-[#f8fafc] flex items-center gap-2 border-b border-slate-800 pb-2">
+              <h3 className="text-base md:text-lg font-semibold text-[#f8fafc] flex items-center gap-2 border-b border-slate-800 pb-2">
                 <Utensils className="w-5 h-5 text-[#d4af37]" />
                 Ana Yemek Seçimi (Çift Kişilik)
               </h3>

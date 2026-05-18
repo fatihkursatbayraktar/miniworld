@@ -88,10 +88,10 @@ export default function EcrinJewelShop() {
   return (
     <div className="fixed inset-0 z-[6000] flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 animate-in fade-in duration-300 pointer-events-auto">
       {/* Outer Golden/Marble Frame */}
-      <div className="w-full max-w-4xl max-h-[85vh] bg-[#0f172a] rounded-2xl shadow-2xl shadow-amber-500/20 border-2 border-[#fcd34d] flex flex-col overflow-hidden relative">
+      <div className="w-full max-w-4xl max-h-[90vh] md:max-h-[85vh] bg-[#0f172a] rounded-2xl shadow-2xl shadow-amber-500/20 border-2 border-[#fcd34d] flex flex-col overflow-hidden relative">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-[#fcd34d]/30 bg-gradient-to-r from-[#1e293b] to-[#0f172a]">
+        <div className="flex items-center justify-between p-4 md:p-5 border-b border-[#fcd34d]/30 bg-gradient-to-r from-[#1e293b] to-[#0f172a]">
           <div className="flex items-center gap-3">
             <span className="text-3xl filter drop-shadow-md">💎</span>
             <div>
@@ -115,10 +115,10 @@ export default function EcrinJewelShop() {
         </div>
  
         {/* Main Content Grid */}
-        <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
+        <div className="flex flex-col md:flex-row flex-1 overflow-y-auto md:overflow-hidden">
           
           {/* Left: Product Grid */}
-          <div className="flex-1 overflow-y-auto p-5 custom-scrollbar bg-[#0b0f19]">
+          <div className="flex-1 md:overflow-y-auto p-4 md:p-5 custom-scrollbar bg-[#0b0f19]">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {JEWEL_ITEMS.map((item) => (
                 <button
@@ -160,7 +160,7 @@ export default function EcrinJewelShop() {
           </div>
  
           {/* Right: Checkout Sidebar */}
-          <div className="w-full md:w-80 bg-[#1e293b] border-l border-[#fcd34d]/30 p-6 flex flex-col relative z-10 shadow-[-10px_0_20px_rgba(0,0,0,0.3)]">
+          <div className="w-full md:w-80 bg-[#1e293b] border-t md:border-t-0 md:border-l border-[#fcd34d]/30 p-6 flex flex-col relative z-10 shadow-[0_-10px_20px_rgba(0,0,0,0.3)] md:shadow-[-10px_0_20px_rgba(0,0,0,0.3)]">
             <h3 className="text-[#f8fafc] font-semibold text-lg mb-6 flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-[#fcd34d]" />
               Seçilen Mücevher

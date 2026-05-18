@@ -182,6 +182,8 @@ export default class JewelerInteriorScene extends Phaser.Scene {
     // Cashier Desk collider
     this.colliders.create(deskX + 80, deskY + 25, undefined, undefined, false).setSize(160, 50);
  
+    this.colliders.refresh();
+ 
     // --- Spawn Player & Partner ---
     this.player = new Player(this, shopX + 300, shopY + shopH - 70, nickname, avatarColor, hairStyle, hairColor);
     this.player.setDepth(150);

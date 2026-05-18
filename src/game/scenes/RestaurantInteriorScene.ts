@@ -388,6 +388,8 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
     // Reception Desk solid
     this.colliders.create(deskX + 35, deskY + 20, undefined, undefined, false).setSize(70, 40);
 
+    this.colliders.refresh();
+
     // ── 7. ENTITIES SPAWN ──────────────────────────────────────────────────
     this.player = new Player(this, shopX + 320, shopY + shopH - 75, this.nickname, this.avatarColor, this.hairStyle, this.hairColor);
     this.player.setDepth(150);
