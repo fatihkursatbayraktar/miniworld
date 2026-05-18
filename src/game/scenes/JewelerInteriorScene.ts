@@ -15,6 +15,10 @@ export default class JewelerInteriorScene extends Phaser.Scene {
   }
  
   create() {
+    // Set physics world & camera boundaries to match coordinate mapping
+    this.physics.world.setBounds(0, 0, 1600, 900);
+    this.cameras.main.setBounds(0, 0, 1600, 900);
+
     // Read URL config data from registry (populated in MainScene/BootScene)
     const playMode = this.registry.get("playMode") || "ai";
     const nickname = this.registry.get("nickname") || "Sunny";
