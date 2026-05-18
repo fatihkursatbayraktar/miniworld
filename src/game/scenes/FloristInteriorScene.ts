@@ -273,26 +273,24 @@ export default class FloristInteriorScene extends Phaser.Scene {
     );
     this.player.setDepth(150);
  
-    // 8. Spawn AI/Network Partner inside
-    const isAISimulation = this.playMode === "ai";
-    const partnerName = isAISimulation ? "Luna" : "Partner";
-    const partnerColor = isAISimulation ? 0xa78bfa : 0xf472b6;
- 
-    this.partner = new Partner(
-      this,
-      shopX + 330,
-      shopY + shopH - 60,
-      partnerName,
-      partnerColor,
-      isAISimulation ? "long" : "spiky",
-      isAISimulation ? 0xd97706 : 0x1e293b,
-      isAISimulation
-    );
-    this.partner.setDepth(140);
+    // 8. Spawn AI Partner inside
+    if (this.playMode === "ai") {
+      this.partner = new Partner(
+        this,
+        shopX + 330,
+        shopY + shopH - 60,
+        "Luna",
+        0xa78bfa,
+        "long",
+        0xd97706,
+        true
+      );
+      this.partner.setDepth(140);
+      this.physics.add.collider(this.partner, this.colliders);
+    }
  
     // Colliders
     this.physics.add.collider(this.player, this.colliders);
-    this.physics.add.collider(this.partner, this.colliders);
     // Disabling physical player-partner collision to prevent body blocking in tight cozy spaces
  
     // 9. Floating Trigger Label Prompt
@@ -331,7 +329,9 @@ export default class FloristInteriorScene extends Phaser.Scene {
   public update(time: number, delta: number) {
     const joystickVel = (window as any).joystickVelocity;
     this.player.update(time, delta, joystickVel);
-    this.partner.update(time, delta, this.player);
+    if (this.partner) {
+      this.partner.update(time, delta, this.player);
+    }
  
     const shopX = this.shopX;
     const shopY = this.shopY;
