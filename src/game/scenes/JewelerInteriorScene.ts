@@ -185,6 +185,9 @@ export default class JewelerInteriorScene extends Phaser.Scene {
     // --- Spawn Player & Partner ---
     this.player = new Player(this, shopX + 300, shopY + shopH - 70, nickname, avatarColor, hairStyle, hairColor);
     this.physics.add.collider(this.player, this.colliders);
+
+    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+    this.cameras.main.setZoom(1.15);
  
     if (playMode === "ai") {
       this.partner = new Partner(this, shopX + 270, shopY + shopH - 70, "Luna", 0xa78bfa, "long", 0xd97706, true);

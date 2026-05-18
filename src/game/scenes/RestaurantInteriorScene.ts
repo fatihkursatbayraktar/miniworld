@@ -387,6 +387,9 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
     this.player = new Player(this, shopX + 320, shopY + shopH - 75, this.nickname, this.avatarColor, this.hairStyle, this.hairColor);
     this.physics.add.collider(this.player, this.colliders);
 
+    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+    this.cameras.main.setZoom(1.15);
+
     if (this.playMode === "ai") {
       this.partner = new Partner(this, shopX + 280, shopY + shopH - 75, "Luna", 0xa78bfa, "long", 0xd97706, true);
       this.physics.add.collider(this.partner, this.colliders);
