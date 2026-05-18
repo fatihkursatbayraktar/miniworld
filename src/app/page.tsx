@@ -18,6 +18,96 @@ export default function OnboardingPage() {
   const [roomCode, setRoomCode] = useState("1234");
   const [netAction, setNetAction] = useState<"create" | "join">("create");
 
+  // Real-time Active Lobbies Directory
+  const [activeLobbies, setActiveLobbies] = useState<Record<string, {
+    roomCode: string;
+    hostName: string;
+    avatarColor: string;
+    gender: string;
+    lastActive: number;
+  }>>({});
+
+  useEffect(() => {
+    let ws: WebSocket | null = null;
+    let pulseInterval: any = null;
+
+    try {
+      // Connect to a central lobby directory channel using the same free public broker
+      ws = new WebSocket("wss://demo.piesocket.com/v3/together-cozy-world-lobby-directory?api_key=VCXCEJZvOyM643QC29X9wN663a8a3299a9a3b9&notify_self=0");
+
+      ws.onopen = () => {
+        // Send initial pulse if we are currently hosting
+        if (netAction === "create") {
+          try {
+            ws?.send(JSON.stringify({
+              type: "lobby_pulse",
+              roomCode,
+              hostName: nickname,
+              avatarColor,
+              gender,
+              timestamp: Date.now()
+            }));
+          } catch (e) {}
+        }
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data && data.type === "lobby_pulse" && data.roomCode) {
+            setActiveLobbies((prev) => ({
+              ...prev,
+              [data.roomCode]: {
+                roomCode: data.roomCode,
+                hostName: data.hostName || "Gizemli Ev Sahibi",
+                avatarColor: data.avatarColor || "#fb7185",
+                gender: data.gender || "girl",
+                lastActive: Date.now()
+              }
+            }));
+          }
+        } catch (e) {}
+      };
+    } catch (e) {
+      console.warn("Lobby directory failed to initialize:", e);
+    }
+
+    // Periodically send pulses if hosting, and clear stale lobbies
+    pulseInterval = setInterval(() => {
+      if (netAction === "create" && ws && ws.readyState === WebSocket.OPEN) {
+        try {
+          ws.send(JSON.stringify({
+            type: "lobby_pulse",
+            roomCode,
+            hostName: nickname,
+            avatarColor,
+            gender,
+            timestamp: Date.now()
+          }));
+        } catch (e) {}
+      }
+
+      // Cleanup stale lobbies (no pulse received in the last 8 seconds)
+      setActiveLobbies((prev) => {
+        const next = { ...prev };
+        let changed = false;
+        const now = Date.now();
+        Object.keys(next).forEach((key) => {
+          if (now - next[key].lastActive > 8000) {
+            delete next[key];
+            changed = true;
+          }
+        });
+        return changed ? next : prev;
+      });
+    }, 3000);
+
+    return () => {
+      if (ws) ws.close();
+      if (pulseInterval) clearInterval(pulseInterval);
+    };
+  }, [netAction, roomCode, nickname, avatarColor, gender]);
+
   const sweaterColors = [
     { name: "Rose", hex: "#fb7185" },
     { name: "Lavender", hex: "#c084fc" },
@@ -459,6 +549,52 @@ export default function OnboardingPage() {
             </div>
           )}
 
+          {/* Active lobbies deck */}
+          {Object.keys(activeLobbies).length > 0 && (
+            <div className="flex flex-col gap-2 border-t border-white/10 pt-4 animate-fade-in">
+              <label className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                Aktif Canlı Odalar (Lobi Listesi)
+              </label>
+              <div className="flex flex-col gap-2 max-h-[140px] overflow-y-auto pr-1 custom-scrollbar">
+                {Object.values(activeLobbies).map((lobby) => (
+                  <div 
+                    key={lobby.roomCode}
+                    className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/30 border border-white/5 hover:border-violet-500/30 transition-all group"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <div 
+                        style={{ backgroundColor: lobby.avatarColor }}
+                        className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] border border-white/10 text-white font-bold"
+                      >
+                        {lobby.gender === "girl" ? "👧" : "👦"}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-xs font-semibold text-[#ebeef5] group-hover:text-violet-200 transition-colors">
+                          {lobby.hostName}'in Dünyası
+                        </span>
+                        <span className="text-[9px] text-slate-400 font-mono tracking-wider">
+                          Oda Kodu: #{lobby.roomCode}
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        cozyAudio.playGiftBell();
+                        setRoomCode(lobby.roomCode);
+                        setNetAction("join");
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-violet-600/60 hover:bg-violet-600 border border-white/10 text-[10px] font-bold text-violet-100 hover:text-white transition-all shadow-md active:scale-95 cursor-pointer"
+                    >
+                      Katıl ➡️
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+ 
           {/* ENTER BUTTON */}
           <button
             onClick={handleEnterWorld}
