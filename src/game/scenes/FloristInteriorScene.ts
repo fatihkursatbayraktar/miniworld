@@ -308,6 +308,13 @@ export default class FloristInteriorScene extends Phaser.Scene {
     // Bind Keyboard Actions
     this.input.keyboard?.on("keydown-F", () => this.handleActionKey());
     this.input.keyboard?.on("keydown-E", () => this.handleActionKey());
+
+    // Mobile touch interaction: Tap anywhere when near an interactive area to trigger action
+    this.input.on("pointerdown", () => {
+      if (this.activeZone) {
+        this.handleActionKey();
+      }
+    });
  
     // Cameras Follow Player inside shop interior
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);

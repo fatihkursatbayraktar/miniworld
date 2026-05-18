@@ -414,6 +414,17 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
     this.input.keyboard?.on("keydown-E", this.handleInteractSeat, this);
     this.input.keyboard?.on("keydown-F", this.handleActionKey, this);
 
+    // Mobile touch interaction: Tap anywhere when near an interactive area to trigger action
+    this.input.on("pointerdown", () => {
+      if (this.activeZone === "reception") {
+        this.handleActionKey();
+      } else if (this.activeZone === "tableSeat") {
+        this.handleInteractSeat();
+      } else if (this.player.isSitting) {
+        this.handleInteractSeat(); // Stand up on screen tap
+      }
+    });
+
     // Register global triggers
     (window as any).triggerGhaliaOrder = (food: string, drink: string) => {
       this.startDiningSequence(food, drink);

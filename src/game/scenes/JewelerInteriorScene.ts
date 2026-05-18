@@ -208,12 +208,10 @@ export default class JewelerInteriorScene extends Phaser.Scene {
     // Input
     this.input.keyboard?.on("keydown-F", this.handleActionKey, this);
  
-    // Mobile tap handling
-    this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+    // Mobile tap handling: Tap anywhere when near an interactive area to trigger action
+    this.input.on("pointerdown", () => {
       if (this.activeZone) {
-        // Simple tap on character
-        const dist = Phaser.Math.Distance.Between(pointer.worldX, pointer.worldY, this.player.x, this.player.y);
-        if (dist < 80) this.handleActionKey();
+        this.handleActionKey();
       }
     });
   }

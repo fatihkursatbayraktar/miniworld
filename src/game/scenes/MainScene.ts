@@ -141,6 +141,25 @@ export default class MainScene extends Phaser.Scene {
     this.input.keyboard?.on("keydown-E", () => this.handleKeyboardAction("E"));
     this.input.keyboard?.on("keydown-F", () => this.handleKeyboardAction("F"));
 
+    // Mobile touch interaction: Tap anywhere when near an interactive area to trigger action
+    this.input.on("pointerdown", () => {
+      if (this.promptKeyLabel && this.promptKeyLabel.alpha > 0) {
+        if (this.player.isSitting) {
+          this.handleKeyboardAction("E");
+        } else if (this.activeSeatInRange) {
+          this.handleKeyboardAction("E");
+        } else if (this.activeParkInRange === "fishing") {
+          this.handleKeyboardAction("E");
+        } else if (this.activeParkInRange === "mangal") {
+          this.handleKeyboardAction("E");
+        } else if (this.activeArcadeInRange && ["hockey", "bowling", "billiards", "gokart"].includes(this.activeArcadeInRange)) {
+          this.handleKeyboardAction("E");
+        } else if (this.activeArcadeInRange && ["flower", "cafe", "jewel"].includes(this.activeArcadeInRange)) {
+          this.handleKeyboardAction("F");
+        }
+      }
+    });
+
     // Camera locks on player
     this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
     this.cameras.main.setZoom(1.1);
