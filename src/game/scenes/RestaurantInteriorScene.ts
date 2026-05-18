@@ -390,6 +390,7 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
 
     // ── 7. ENTITIES SPAWN ──────────────────────────────────────────────────
     this.player = new Player(this, shopX + 320, shopY + shopH - 75, this.nickname, this.avatarColor, this.hairStyle, this.hairColor);
+    this.player.setDepth(150);
     this.physics.add.collider(this.player, this.colliders);
 
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -399,6 +400,7 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
 
     if (this.playMode === "ai") {
       this.partner = new Partner(this, shopX + 280, shopY + shopH - 75, "Luna", 0xa78bfa, "long", 0xd97706, true);
+      this.partner.setDepth(140);
       this.physics.add.collider(this.partner, this.colliders);
     }
 
