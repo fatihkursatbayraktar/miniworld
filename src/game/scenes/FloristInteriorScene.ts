@@ -15,6 +15,12 @@ export default class FloristInteriorScene extends Phaser.Scene {
   private hairStyle = "short";
   private hairColor = 0x78350f;
   private playMode = "ai";
+
+  // Fixed cozy cabin coordinates to prevent layout shifts on mobile
+  private shopX = 520;
+  private shopY = 250;
+  private shopW = 560;
+  private shopH = 400;
  
   // Interacting states
   private activeZone: "exit" | "shelf" | "cashier" | null = null;
@@ -36,25 +42,22 @@ export default class FloristInteriorScene extends Phaser.Scene {
       this.registry.set("inventory", []);
     }
  
-    const w = this.scale.width;
-    const h = this.scale.height;
- 
-    // 2. Set Boundaries
-    this.physics.world.setBounds(0, 0, w, h);
- 
+    // Set physics world and camera bounds to a stable 1600x900 space
+    this.physics.world.setBounds(0, 0, 1600, 900);
+    this.cameras.main.setBounds(0, 0, 1600, 900);
+
     // 3. Draw Florist Interior programmatically (Exquisite Cozy Wooden Cottage theme)
     const bg = this.add.graphics();
     bg.setDepth(5);
  
     // Fill outer background with absolute dark cozy void
     bg.fillStyle(0x07090e, 1.0);
-    bg.fillRect(0, 0, w, h);
+    bg.fillRect(0, 0, 1600, 900);
  
-    // Center shop interior cabin (width: 560, height: 400)
-    const shopX = (w - 560) / 2;
-    const shopY = (h - 400) / 2;
-    const shopW = 560;
-    const shopH = 400;
+    const shopX = this.shopX;
+    const shopY = this.shopY;
+    const shopW = this.shopW;
+    const shopH = this.shopH;
  
     // Deep wood drop shadow
     bg.fillStyle(0x0a0604, 0.6);
@@ -320,10 +323,10 @@ export default class FloristInteriorScene extends Phaser.Scene {
     this.player.update(time, delta, joystickVel);
     this.partner.update(time, delta, this.player);
  
-    const shopX = (this.scale.width - 560) / 2;
-    const shopY = (this.scale.height - 400) / 2;
-    const shopW = 560;
-    const shopH = 400;
+    const shopX = this.shopX;
+    const shopY = this.shopY;
+    const shopW = this.shopW;
+    const shopH = this.shopH;
  
     // Distance scanning for triggers
     const playerX = this.player.x;
@@ -443,8 +446,8 @@ export default class FloristInteriorScene extends Phaser.Scene {
  
   private displayNPCSpeech(npcKey: string, message: string) {
     // Generate a temporary speech bubble above Berra NPC head
-    const shopX = (this.scale.width - 560) / 2;
-    const shopY = (this.scale.height - 400) / 2;
+    const shopX = this.shopX;
+    const shopY = this.shopY;
     const deskX = shopX + 410;
     const deskY = shopY + 160;
     const npcX = deskX + 50;

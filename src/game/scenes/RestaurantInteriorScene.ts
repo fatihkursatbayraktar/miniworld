@@ -87,6 +87,12 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
   private hairColor = 0x78350f;
   private playMode = "ai";
 
+  // Fixed luxury cabin coordinates to prevent layout shifts on mobile
+  private shopX = 480;
+  private shopY = 225;
+  private shopW = 640;
+  private shopH = 450;
+
   // Seats & Tables
   private seats: Array<{
     x: number;
@@ -130,22 +136,21 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
     this.hairStyle = this.registry.get("hairStyle") || "short";
     this.hairColor = this.registry.get("hairColor") || 0x78350f;
 
-    const w = this.scale.width;
-    const h = this.scale.height;
-
-    this.physics.world.setBounds(0, 0, w, h);
+    // Set physics world and camera bounds to a stable 1600x900 space
+    this.physics.world.setBounds(0, 0, 1600, 900);
+    this.cameras.main.setBounds(0, 0, 1600, 900);
 
     // ── 1. BACKGROUND VOID & FLOOR ─────────────────────────────────────────
     const bg = this.add.graphics();
     bg.setDepth(5);
     
     bg.fillStyle(0x07090e, 1.0); // Deep dark space
-    bg.fillRect(0, 0, w, h);
+    bg.fillRect(0, 0, 1600, 900);
 
-    const shopX = (w - 640) / 2;
-    const shopY = (h - 450) / 2;
-    const shopW = 640;
-    const shopH = 450;
+    const shopX = this.shopX;
+    const shopY = this.shopY;
+    const shopW = this.shopW;
+    const shopH = this.shopH;
 
     // Floor drop shadow
     bg.fillStyle(0x020408, 0.7);
@@ -449,9 +454,9 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
       this.drawBosphorusWindowView(clock.hour, clock.minute);
     }
 
-    const shopX = (this.scale.width - 640) / 2;
-    const shopY = (this.scale.height - 450) / 2;
-    const shopH = 450;
+    const shopX = this.shopX;
+    const shopY = this.shopY;
+    const shopH = this.shopH;
 
     const px = this.player.x;
     const py = this.player.y;
@@ -980,8 +985,8 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
   }
 
   private drawBosphorusWindowView(hour: number, minute: number) {
-    const shopX = (this.scale.width - 640) / 2;
-    const shopY = (this.scale.height - 450) / 2;
+    const shopX = this.shopX;
+    const shopY = this.shopY;
     const winX = shopX + 32;
     const winY = shopY + 22;
     const winW = 576;
