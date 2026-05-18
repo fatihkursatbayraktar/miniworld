@@ -98,9 +98,10 @@ export default function HUD() {
     <div className="fixed inset-0 z-[7000] pointer-events-none select-none flex flex-col justify-between p-4 md:p-6 text-[#ebeef5]">
       
       {/* Top Bar HUD */}
-      <div className="w-full flex items-center justify-between pointer-events-auto">
-        {/* Left Side: Dynamic Game Clock */}
-        <div className="flex items-center gap-3">
+      <div className="w-full flex flex-col md:flex-row md:items-center justify-between gap-4 pointer-events-auto">
+        {/* Left Side: Dynamic Game Clock & Fast-Forward Time Selection */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+          {/* Clock */}
           <div className="flex items-center gap-2.5 px-4 py-2 rounded-full glass border border-white/10 shadow-2xl backdrop-blur-md select-none">
             <span className="text-xl filter drop-shadow-sm leading-none animate-pulse">
               {clockTime.hour >= 6 && clockTime.hour < 8 ? "🌅" :
@@ -116,13 +117,69 @@ export default function HUD() {
                clockTime.hour >= 17 && clockTime.hour < 20 ? "Gün Batımı" : "Gece"}
             </span>
           </div>
+
+          {/* Time Selector */}
+          <div className="flex items-center gap-1 p-1 rounded-full glass border-white/5 shadow-lg select-none">
+            <button
+              onClick={() => handleAtmosphereChange("sunny")}
+              className="px-2.5 py-1 rounded-full text-[9px] font-extrabold bg-white/5 hover:bg-white/10 text-amber-300 transition-all cursor-pointer active:scale-95 shadow"
+            >
+              ☀️ Gündüz
+            </button>
+            <button
+              onClick={() => handleAtmosphereChange("sunset")}
+              className="px-2.5 py-1 rounded-full text-[9px] font-extrabold bg-white/5 hover:bg-white/10 text-rose-300 transition-all cursor-pointer active:scale-95 shadow"
+            >
+              🌅 Akşam
+            </button>
+            <button
+              onClick={() => handleAtmosphereChange("rainy")}
+              className="px-2.5 py-1 rounded-full text-[9px] font-extrabold bg-white/5 hover:bg-white/10 text-violet-300 transition-all cursor-pointer active:scale-95 shadow"
+            >
+              🌙 Gece
+            </button>
+          </div>
         </div>
  
-        {/* Right Side: Help Toggle */}
-        <div className="flex items-center gap-2">
+        {/* Right Side: Repositioned Action Tray */}
+        <div className="flex items-center gap-2 self-end md:self-auto">
+          {/* Quick Gift shop button */}
+          <button
+            onClick={() => triggerMobileAction("shop")}
+            className="p-2.5 rounded-full glass hover:bg-white/10 active:scale-95 transition-all text-slate-300 hover:text-white cursor-pointer shadow-lg flex items-center justify-center"
+            title="Çiçekçi Dükkanı"
+          >
+            <Gift className="w-5 h-5" />
+          </button>
+ 
+          {/* Drink Tea/Coffee button */}
+          <button
+            onClick={() => triggerMobileAction("coffee")}
+            className="p-2.5 rounded-full glass hover:bg-white/10 active:scale-95 transition-all text-slate-300 hover:text-white cursor-pointer shadow-lg flex items-center justify-center"
+            title="Kahve İç"
+          >
+            <Coffee className="w-5 h-5" />
+          </button>
+
+          {/* Sırt Çantası (Backpack Inventory) Button */}
+          <button
+            onClick={() => {
+              cozyAudio.playClick();
+              if ((window as any).triggerBackpackOpen) {
+                (window as any).triggerBackpackOpen();
+              }
+            }}
+            className="p-2.5 rounded-full border bg-[#3e1f0e]/85 border-[#5e3816] hover:border-amber-400 text-amber-200 shadow-lg active:scale-95 transition-all cursor-pointer flex items-center justify-center"
+            title="Sırt Çantası (Envanter) 🎒"
+          >
+            <span className="text-xl filter drop-shadow-sm leading-none">🎒</span>
+          </button>
+ 
+          {/* Help Toggle */}
           <button
             onClick={() => { cozyAudio.playClick(); setShowHelp(!showHelp); }}
-            className="p-2.5 rounded-full glass hover:bg-white/10 active:scale-95 transition-all text-slate-300 hover:text-white cursor-pointer shadow-lg"
+            className="p-2.5 rounded-full glass hover:bg-white/10 active:scale-95 transition-all text-slate-300 hover:text-white cursor-pointer shadow-lg flex items-center justify-center"
+            title="Yardım"
           >
             <HelpCircle className="w-5 h-5" />
           </button>
@@ -167,76 +224,8 @@ export default function HUD() {
         </div>
       )}
  
-      {/* Bottom Bar: Atmosphere & Quick Actions */}
-      <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-4 pointer-events-auto">
-        
-        {/* Tactile Actions for mobile devices */}
-        <div className="flex items-center justify-center gap-3 self-center md:self-end">
-          
-          {/* Fast-Forward Time Selection Deck */}
-          <div className="flex items-center gap-1.5 p-1.5 rounded-full glass border-white/5 shadow-lg select-none">
-            <span className="text-[9px] font-extrabold text-slate-400 px-2.5 uppercase tracking-wider">Hızlı Zaman:</span>
-            <button
-              onClick={() => handleAtmosphereChange("sunny")}
-              className="px-2.5 py-1.5 rounded-full text-[9px] font-extrabold bg-white/5 hover:bg-white/10 text-amber-300 transition-all cursor-pointer active:scale-95 shadow"
-            >
-              ☀️ Gündüz
-            </button>
-            <button
-              onClick={() => handleAtmosphereChange("sunset")}
-              className="px-2.5 py-1.5 rounded-full text-[9px] font-extrabold bg-white/5 hover:bg-white/10 text-rose-300 transition-all cursor-pointer active:scale-95 shadow"
-            >
-              🌅 Akşam
-            </button>
-            <button
-              onClick={() => handleAtmosphereChange("rainy")}
-              className="px-2.5 py-1.5 rounded-full text-[9px] font-extrabold bg-white/5 hover:bg-white/10 text-violet-300 transition-all cursor-pointer active:scale-95 shadow animate-pulse"
-            >
-              🌙 Gece
-            </button>
-          </div>
- 
-          {/* Quick Gift shop button */}
-          <button
-            onClick={() => triggerMobileAction("shop")}
-            className="p-3 rounded-full border bg-white/5 border-white/5 hover:border-violet-400/30 text-slate-300 hover:text-white shadow-lg active:scale-95 transition-all cursor-pointer"
-            title="Çiçekçi Dükkanı"
-          >
-            <Gift className="w-5 h-5" />
-          </button>
- 
-          {/* Sırt Çantası (Backpack Inventory) Button */}
-          <button
-            onClick={() => {
-              cozyAudio.playClick();
-              if ((window as any).triggerBackpackOpen) {
-                (window as any).triggerBackpackOpen();
-              }
-            }}
-            className="p-3 rounded-full border bg-[#3e1f0e]/85 border-[#5e3816] hover:border-amber-400 text-amber-200 shadow-lg active:scale-95 transition-all cursor-pointer flex items-center justify-center"
-            title="Sırt Çantası (Envanter) 🎒"
-          >
-            <span className="text-lg filter drop-shadow-sm leading-none">🎒</span>
-          </button>
- 
-          {/* Drink Tea/Coffee button */}
-          <button
-            onClick={() => triggerMobileAction("coffee")}
-            className="p-3 rounded-full border bg-white/5 border-white/5 hover:border-violet-400/30 text-slate-300 hover:text-white shadow-lg active:scale-95 transition-all cursor-pointer"
-          >
-            <Coffee className="w-5 h-5" />
-          </button>
- 
-          {/* Sitting down trigger */}
-          <button
-            onClick={() => triggerMobileAction("sit")}
-            className="px-5 py-3.5 rounded-full border bg-gradient-to-r from-violet-500/80 to-fuchsia-500/80 border-violet-400/30 text-white font-semibold font-display tracking-wider shadow-lg active:scale-95 transition-all cursor-pointer"
-          >
-            Otur / Kalk
-          </button>
-        </div>
- 
-      </div>
+      {/* Empty bottom element to fill flex space cleanly */}
+      <div className="h-20 pointer-events-none" />
  
     </div>
   );
