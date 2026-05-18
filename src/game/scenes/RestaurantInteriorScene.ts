@@ -394,6 +394,8 @@ export default class RestaurantInteriorScene extends Phaser.Scene {
 
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
     this.cameras.main.setZoom(1.15);
+    // Snap camera scroll instantly to player to prevent panning from top-left (0,0) void on start
+    this.cameras.main.centerOn(this.player.x, this.player.y);
 
     if (this.playMode === "ai") {
       this.partner = new Partner(this, shopX + 280, shopY + shopH - 75, "Luna", 0xa78bfa, "long", 0xd97706, true);

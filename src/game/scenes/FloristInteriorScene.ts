@@ -318,6 +318,9 @@ export default class FloristInteriorScene extends Phaser.Scene {
  
     // Cameras Follow Player inside shop interior
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+    this.cameras.main.setZoom(1.2);
+    // Snap camera scroll instantly to player to prevent panning from top-left (0,0) void on start
+    this.cameras.main.centerOn(this.player.x, this.player.y);
  
     // Berra welcomes when entering
     this.time.delayedCall(800, () => {
