@@ -6,13 +6,20 @@ export default function VirtualJoystick() {
   const [active, setActive] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     // Initialize global velocity state
     (window as any).joystickVelocity = { x: 0, y: 0 };
     
+    const interval = setInterval(() => {
+      const isAnyModalOpen = !!document.querySelector('.fixed.inset-0[class*="backdrop-blur"]');
+      setIsMenuOpen(isAnyModalOpen);
+    }, 200);
+
     return () => {
       (window as any).joystickVelocity = { x: 0, y: 0 };
+      clearInterval(interval);
     };
   }, []);
 
@@ -58,6 +65,8 @@ export default function VirtualJoystick() {
     (window as any).joystickVelocity = { x: 0, y: 0 };
   };
 
+  if (isMenuOpen) return null;
+ 
   return (
     <div
       ref={containerRef}

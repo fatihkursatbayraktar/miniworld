@@ -16,6 +16,7 @@ export default function Hotbar() {
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [isCloseToPartner, setIsCloseToPartner] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
  
   // Poll Phaser registry state for real-time responsiveness
@@ -33,6 +34,10 @@ export default function Hotbar() {
       if (closeFlag !== isCloseToPartner) {
         setIsCloseToPartner(closeFlag);
       }
+
+      // 3. Check if any shop modal or menu is open
+      const isAnyModalOpen = !!document.querySelector('.fixed.inset-0[class*="backdrop-blur"]');
+      setIsMenuOpen(isAnyModalOpen);
     }, 200);
  
     return () => {
@@ -114,6 +119,8 @@ export default function Hotbar() {
   const hotbarItems = Array.from({ length: 4 }).map((_, idx) => inventory[idx] || null);
   const activeItem = activeIndex !== null ? hotbarItems[activeIndex] : null;
   const showGiftButton = isCloseToPartner && activeItem !== null;
+ 
+  if (isMenuOpen) return null;
  
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[8000] flex flex-col items-center gap-4 select-none pointer-events-auto">
